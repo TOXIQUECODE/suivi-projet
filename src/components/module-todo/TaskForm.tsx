@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { PlusCircle } from 'lucide-react';
 
-// On définit ce que le formulaire va renvoyer au parent
 interface TaskFormProps {
   onAddTask: (title: string, sphere: string, date: string) => void;
 }
@@ -15,10 +14,8 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
     e.preventDefault();
     if (!newTask.trim()) return;
     
-    // On envoie les données au composant parent (TaskView)
     onAddTask(newTask, newSphere, newDate || 'À planifier');
     
-    // On vide le formulaire
     setNewTask('');
     setNewDate('');
   };

@@ -4,7 +4,7 @@ interface Task {
   id: number;
   title: string;
   sphere: string;
-  date: string;
+  date_task: string;
   completed: boolean;
 }
 
@@ -14,7 +14,7 @@ interface TaskHistoryProps {
 }
 
 export default function TaskHistory({ completedTasks, onDelete }: TaskHistoryProps) {
-  if (completedTasks.length === 0) return null; // Ne s'affiche pas s'il n'y a pas d'historique
+  if (completedTasks.length === 0) return null;
 
   return (
     <div className="liquid-glass" style={{ padding: '20px', borderRadius: '24px', opacity: 0.8 }}>
@@ -42,7 +42,7 @@ export default function TaskHistory({ completedTasks, onDelete }: TaskHistoryPro
                 {task.title}
               </span>
               <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)' }}>
-                {task.sphere} • {task.date}
+                {task.sphere} • {task.date_task}
               </span>
             </div>
             <button 
