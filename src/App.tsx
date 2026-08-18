@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Wallet, CheckSquare, FolderGit2 } from 'lucide-react';
-import ExpenseForm from './components/module-finance/ExpenseForm';
-import BudgetDashboard from './components/module-finance/BudgetDashboard';
+import FinanceView from './components/module-finance/FinanceView';
 import TaskView from './components/module-todo/TaskView';
-import ProjectPlaceholder from './components/module-projet/ProjectPlaceholder'; // <-- Nouvel import
+import ProjectPlaceholder from './components/module-projet/ProjectPlaceholder';
 import './index.css';
 
 function App() {
@@ -15,10 +14,7 @@ function App() {
         
         {/* ONGLET FINANCE */}
         {activeTab === 'finance' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <BudgetDashboard />
-            <ExpenseForm />
-          </div>
+          <FinanceView />
         )}
         
         {/* ONGLET TO-DO */}
