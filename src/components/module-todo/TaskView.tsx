@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Circle } from 'lucide-react';
 import TaskForm from './TaskForm';
 import TaskHistory from './TaskHistory';

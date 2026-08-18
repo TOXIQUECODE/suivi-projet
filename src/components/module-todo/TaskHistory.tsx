@@ -1,4 +1,3 @@
-import React from 'react';
 import { Archive, Trash2 } from 'lucide-react';
 import { Task } from './TaskView';
 
