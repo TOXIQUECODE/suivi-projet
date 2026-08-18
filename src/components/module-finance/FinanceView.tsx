@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import BudgetDashboard from './BudgetDashboard';
 import ExpenseForm from './ExpenseForm';
 import BudgetHistory from './BudgetHistory';
+import CalendarSync from './CalendarSync'; // <-- NOUVEL IMPORT
 import { supabase } from '../../supabaseClient';
 import { History, LayoutDashboard, SendToBack } from 'lucide-react';
 
@@ -50,12 +51,10 @@ export default function FinanceView() {
     }
   };
 
-  // Fonction pour envoyer toute la semaine actuelle dans l'historique
   const handleArchiveWeek = async () => {
     const isConfirmed = window.confirm("Es-tu sûr de vouloir clôturer la semaine et envoyer ces données dans l'historique ?");
     if (!isConfirmed) return;
 
-    // Met à jour la base de données : tout ce qui n'est pas archivé devient archivé
     const { error } = await supabase
       .from('expenses')
       .update({ is_archived: true })
@@ -64,7 +63,6 @@ export default function FinanceView() {
     if (error) {
       console.error("Erreur lors de l'archivage :", error);
     } else {
-      // Recharge les données pour rafraîchir l'interface
       fetchExpenses();
       alert("Semaine clôturée avec succès ! Le template est de nouveau vierge.");
     }
@@ -74,14 +72,12 @@ export default function FinanceView() {
     return <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>Chargement des finances...</p>;
   }
 
-  // Séparation des données
   const activeExpenses = expenses.filter(e => !e.is_archived);
   const archivedExpenses = expenses.filter(e => e.is_archived);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       
-      {/* Sélecteur d'onglets (Actuel vs Historique) */}
       <div className="liquid-glass" style={{ display: 'flex', padding: '5px', borderRadius: '20px' }}>
         <button 
           onClick={() => setCurrentTab('actuel')}
@@ -100,9 +96,12 @@ export default function FinanceView() {
       {currentTab === 'actuel' ? (
         <>
           <BudgetDashboard expenses={activeExpenses} />
+          
           <ExpenseForm onAddExpense={handleAddExpense} />
           
-          {/* BOUTON POUR ARCHIVER LA SEMAINE */}
+          {/* L'AGENDA AJOUTÉ ICI */}
+          <CalendarSync expenses={activeExpenses} />
+          
           {activeExpenses.length > 0 && (
             <button 
               onClick={handleArchiveWeek}
