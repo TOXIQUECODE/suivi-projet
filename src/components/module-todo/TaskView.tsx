@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { Circle } from 'lucide-react';
 import TaskForm from './TaskForm';
 import TaskHistory from './TaskHistory';
 
