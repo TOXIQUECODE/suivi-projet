@@ -1,22 +1,22 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Circle } from 'lucide-react';
 import TaskForm from './TaskForm';
 import TaskHistory from './TaskHistory';
-import { supabase } from '../../supabaseClient'; // Assure-toi que le chemin est bon
+import { supabase } from '../../supabaseClient';
 
 export interface Task {
   id: number;
   title: string;
   sphere: string;
-  date_task: string; // Nom mis à jour pour correspondre au SQL
+  date_task: string;
   completed: boolean;
+  created_at?: string;
 }
 
 export default function TaskView() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. CHARGER LES TÂCHES AU DÉMARRAGE (READ)
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -30,12 +30,11 @@ export default function TaskView() {
     if (error) {
       console.error('Erreur lors du chargement des tâches :', error);
     } else {
-      setTasks(data || []);
+      setTasks((data as Task[]) || []);
     }
     setLoading(false);
   };
 
-  // 2. AJOUTER UNE TÂCHE (CREATE)
   const handleAddTask = async (title: string, sphere: string, date: string) => {
     const { data, error } = await supabase
       .from('tasks')
@@ -44,14 +43,12 @@ export default function TaskView() {
 
     if (error) {
       console.error("Erreur lors de l'ajout :", error);
-    } else if (data) {
-      setTasks([data[0], ...tasks]); // Met à jour l'UI instantanément
+    } else if (data && data.length > 0) {
+      setTasks([data[0] as Task, ...tasks]);
     }
   };
 
-  // 3. COCHER / DÉCOCHER (UPDATE)
   const toggleTask = async (id: number, currentStatus: boolean) => {
-    // Mise à jour optimiste (l'interface réagit avant même la réponse du serveur)
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !currentStatus } : task
     ));
@@ -63,12 +60,10 @@ export default function TaskView() {
 
     if (error) {
       console.error('Erreur lors de la mise à jour :', error);
-      // En cas d'erreur, on recharge la liste pour corriger l'UI
       fetchTasks();
     }
   };
 
-  // 4. SUPPRIMER (DELETE)
   const deleteTask = async (id: number) => {
     setTasks(tasks.filter(task => task.id !== id));
 
@@ -83,7 +78,6 @@ export default function TaskView() {
     }
   };
 
-  // Séparation pour l'affichage
   const activeTasks = tasks.filter(t => !t.completed);
   const completedTasks = tasks.filter(t => t.completed);
 

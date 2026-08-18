@@ -1,12 +1,6 @@
+import React from 'react';
 import { Archive, Trash2 } from 'lucide-react';
-
-interface Task {
-  id: number;
-  title: string;
-  sphere: string;
-  date_task: string;
-  completed: boolean;
-}
+import { Task } from './TaskView';
 
 interface TaskHistoryProps {
   completedTasks: Task[];
