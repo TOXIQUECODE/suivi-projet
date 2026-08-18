@@ -43,7 +43,7 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
           <input 
             type="password" 
             inputMode="numeric"
-            maxLength={4}
+            maxLength={6}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             className="glass-input"
@@ -56,7 +56,7 @@ export default function LoginScreen({ onSuccess }: LoginScreenProps) {
               borderColor: error ? '#ff453a' : 'rgba(255,255,255,0.2)',
               transition: 'border-color 0.3s ease'
             }}
-            placeholder="••••"
+            placeholder="••••••"
             autoFocus
           />
           
