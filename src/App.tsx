@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Wallet, CheckSquare, FolderGit2 } from 'lucide-react';
 import ExpenseForm from './components/module-finance/ExpenseForm';
-import BudgetDashboard from './components/module-finance/BudgetDashboard'; // <-- Ajout ici
+import BudgetDashboard from './components/module-finance/BudgetDashboard';
+import TaskView from './components/module-todo/TaskView';
+import ProjectPlaceholder from './components/module-projet/ProjectPlaceholder'; // <-- Nouvel import
 import './index.css';
 
 function App() {
@@ -10,17 +12,28 @@ function App() {
   return (
     <div className="app-container">
       <main style={{ padding: '20px' }}>
+        
+        {/* ONGLET FINANCE */}
         {activeTab === 'finance' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <BudgetDashboard /> {/* <-- Ajout ici */}
+            <BudgetDashboard />
             <ExpenseForm />
           </div>
         )}
-        {activeTab === 'todo' && <h2>✅ To-Do List</h2>}
-        {activeTab === 'projet' && <h2>🚀 Projets à suivre</h2>}
+        
+        {/* ONGLET TO-DO */}
+        {activeTab === 'todo' && (
+          <TaskView />
+        )}
+        
+        {/* ONGLET PROJET */}
+        {activeTab === 'projet' && (
+          <ProjectPlaceholder />
+        )}
+
       </main>
 
-      {/* ... (La barre de navigation reste inchangée) ... */}
+      {/* BARRE DE NAVIGATION */}
       <nav className="bottom-nav liquid-glass">
         <button 
           className={`nav-item ${activeTab === 'finance' ? 'active' : ''}`}
