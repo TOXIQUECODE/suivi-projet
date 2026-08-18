@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Wallet, CheckSquare, FolderGit2 } from 'lucide-react';
+import ExpenseForm from './components/module-finance/ExpenseForm'; // L'import ajouté
 import './index.css';
 
 function App() {
@@ -7,15 +8,19 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Zone d'affichage dynamique en fonction de l'onglet actif */}
       <main style={{ padding: '20px' }}>
-        {activeTab === 'finance' && <h2>💰 Module Finance</h2>}
+        {activeTab === 'finance' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <ExpenseForm />
+            {/* Le Dashboard viendra s'ajouter ici juste en dessous */}
+          </div>
+        )}
         {activeTab === 'todo' && <h2>✅ To-Do List</h2>}
         {activeTab === 'projet' && <h2>🚀 Projets à suivre</h2>}
       </main>
 
-      {/* Barre de navigation Liquid Glass */}
       <nav className="bottom-nav liquid-glass">
+        {/* ... (Garde tes 3 boutons de navigation ici comme à l'étape 1) ... */}
         <button 
           className={`nav-item ${activeTab === 'finance' ? 'active' : ''}`}
           onClick={() => setActiveTab('finance')}

@@ -62,3 +62,42 @@ body {
 .nav-item.active {
   color: var(--accent-color);
 }
+
+/* Champs de texte et sélecteurs */
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px; /* Évite le zoom automatique sur iPhone */
+  transition: border-color 0.3s ease;
+  margin-bottom: 12px;
+}
+
+.glass-input:focus {
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Style spécifique pour le bouton de soumission */
+.glass-button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: opacity 0.3s;
+}
+
+.glass-button:active {
+  opacity: 0.8;
+}
