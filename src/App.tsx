@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { Wallet, CheckSquare, FolderGit2 } from 'lucide-react';
+import './index.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState('finance');
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app-container">
+      {/* Zone d'affichage dynamique en fonction de l'onglet actif */}
+      <main style={{ padding: '20px' }}>
+        {activeTab === 'finance' && <h2>💰 Module Finance</h2>}
+        {activeTab === 'todo' && <h2>✅ To-Do List</h2>}
+        {activeTab === 'projet' && <h2>🚀 Projets à suivre</h2>}
+      </main>
+
+      {/* Barre de navigation Liquid Glass */}
+      <nav className="bottom-nav liquid-glass">
+        <button 
+          className={`nav-item ${activeTab === 'finance' ? 'active' : ''}`}
+          onClick={() => setActiveTab('finance')}
+        >
+          <Wallet size={24} />
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+        <button 
+          className={`nav-item ${activeTab === 'todo' ? 'active' : ''}`}
+          onClick={() => setActiveTab('todo')}
+        >
+          <CheckSquare size={24} />
+        </button>
+
+        <button 
+          className={`nav-item ${activeTab === 'projet' ? 'active' : ''}`}
+          onClick={() => setActiveTab('projet')}
+        >
+          <FolderGit2 size={24} />
+        </button>
+      </nav>
+    </div>
+  );
 }
 
-export default App
+export default App;
