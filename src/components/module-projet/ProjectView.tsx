@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FolderGit2, PlusCircle, Trash2, Activity, Minus, Plus } from 'lucide-react';
+import { PlusCircle, Trash2, Activity, Minus, Plus } from 'lucide-react';
 import { supabase } from '../../supabaseClient';
 
 export interface Project {
@@ -18,7 +18,7 @@ export default function ProjectView() {
   // États pour le formulaire
   const [newName, setNewName] = useState('');
   const [newStatus, setNewStatus] = useState('');
-  const [newColor, setNewColor] = useState('#0a84ff'); // Bleu iOS par défaut
+  const [newColor, setNewColor] = useState('#0a84ff');
 
   useEffect(() => {
     fetchProjects();
@@ -60,10 +60,9 @@ export default function ProjectView() {
 
   // 3. MODIFIER LA PROGRESSION
   const updateProgress = async (id: number, currentProgress: number, change: number) => {
-    const newProgress = Math.min(Math.max(currentProgress + change, 0), 100); // Bloque entre 0 et 100
+    const newProgress = Math.min(Math.max(currentProgress + change, 0), 100);
     if (newProgress === currentProgress) return;
 
-    // Mise à jour optimiste (l'interface réagit tout de suite)
     setProjects(projects.map(p => p.id === id ? { ...p, progress: newProgress } : p));
 
     const { error } = await supabase
@@ -73,7 +72,7 @@ export default function ProjectView() {
 
     if (error) {
       console.error('Erreur lors de la mise à jour :', error);
-      fetchProjects(); // On recharge en cas d'erreur
+      fetchProjects();
     }
   };
 
@@ -124,7 +123,6 @@ export default function ProjectView() {
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px' }}>
             <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>Couleur :</span>
-            {/* Pastilles de couleur style Apple */}
             {['#0a84ff', '#30d158', '#ff9f0a', '#ff453a', '#bf5af2'].map(color => (
               <div 
                 key={color}
@@ -174,7 +172,6 @@ export default function ProjectView() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)' }}>Progression</span>
                 
-                {/* Contrôles de progression (+ et -) */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <button onClick={() => updateProgress(project.id, project.progress, -10)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                     <Minus size={14} />
@@ -188,7 +185,6 @@ export default function ProjectView() {
                 </div>
               </div>
               
-              {/* La barre visuelle */}
               <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
                 <div 
                   style={{ 
