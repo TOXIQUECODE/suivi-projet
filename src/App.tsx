@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import { Wallet, CheckSquare, FolderGit2 } from 'lucide-react';
 import FinanceView from './components/module-finance/FinanceView';
 import TaskView from './components/module-todo/TaskView';
-import ProjectPlaceholder from './components/module-projet/ProjectPlaceholder';
-import LoginScreen from './components/LoginScreen'; // <-- L'import du cadenas
+import ProjectView from './components/module-projet/ProjectView'; // <-- On utilise le nouveau composant connecté
+import LoginScreen from './components/LoginScreen';
 import './index.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('finance');
 
-  // Au chargement, on vérifie si l'utilisateur s'est déjà connecté dans cet onglet
   useEffect(() => {
     const authStatus = sessionStorage.getItem('isAppUnlocked');
     if (authStatus === 'true') {
@@ -18,13 +17,12 @@ function App() {
     }
   }, []);
 
-  // Fonction appelée quand le code PIN est bon
   const handleUnlock = () => {
     setIsAuthenticated(true);
-    sessionStorage.setItem('isAppUnlocked', 'true'); // Mémorise la connexion
+    sessionStorage.setItem('isAppUnlocked', 'true');
   };
 
-  // 🛑 SI PAS CONNECTÉ : On affiche uniquement l'écran de verrouillage
+  // 🛑 ÉCRAN DE VERROUILLAGE
   if (!isAuthenticated) {
     return (
       <div className="app-container">
@@ -33,7 +31,7 @@ function App() {
     );
   }
 
-  // ✅ SI CONNECTÉ : On affiche l'application complète
+  // ✅ APPLICATION DÉVERROUILLÉE
   return (
     <div className="app-container">
       <main style={{ padding: '20px' }}>
@@ -47,7 +45,7 @@ function App() {
         )}
         
         {activeTab === 'projet' && (
-          <ProjectPlaceholder />
+          <ProjectView /> // <-- Le nouveau composant connecté s'affiche ici
         )}
 
       </main>
